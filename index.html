@@ -1,0 +1,432 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Flores amarillas para María</title>
+<meta name="theme-color" content="#FFF4D6">
+<meta name="description" content="Un jardín de flores amarillas que florece distinto cada día. Para María.">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Cg%3E%3Cellipse cx='50' cy='22' rx='9' ry='20' fill='%23FFC107'/%3E%3Cellipse cx='50' cy='78' rx='9' ry='20' fill='%23FFC107'/%3E%3Cellipse cx='22' cy='50' rx='20' ry='9' fill='%23FFC107'/%3E%3Cellipse cx='78' cy='50' rx='20' ry='9' fill='%23FFC107'/%3E%3Cellipse cx='30' cy='30' rx='9' ry='18' fill='%23FFD54F' transform='rotate(-45 30 30)'/%3E%3Cellipse cx='70' cy='30' rx='9' ry='18' fill='%23FFD54F' transform='rotate(45 70 30)'/%3E%3Cellipse cx='30' cy='70' rx='9' ry='18' fill='%23FFD54F' transform='rotate(45 30 70)'/%3E%3Cellipse cx='70' cy='70' rx='9' ry='18' fill='%23FFD54F' transform='rotate(-45 70 70)'/%3E%3Ccircle cx='50' cy='50' r='15' fill='%23553A16'/%3E%3C/g%3E%3C/svg%3E">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=Great+Vibes&display=swap" rel="stylesheet">
+<style>
+  *{box-sizing:border-box;margin:0;padding:0}
+  :root{
+    --ink:#4A3520;
+    --ink-soft:#7A6344;
+    --gold:#F2B705;
+  }
+  html,body{height:100%}
+  body{
+    font-family:"Cormorant Garamond",Georgia,serif;
+    color:var(--ink);
+    background:linear-gradient(180deg,#EAF4FB 0%,#FBF3DC 38%,#FBE7B4 62%,#F4DA92 82%,#EFD086 100%);
+    min-height:100vh;
+    overflow-x:hidden;
+    position:relative;
+    -webkit-font-smoothing:antialiased;
+  }
+  /* ---------- atmosphere ---------- */
+  .sun{
+    position:fixed;top:-16vh;right:-12vw;width:70vw;height:70vw;max-width:900px;max-height:900px;
+    background:radial-gradient(circle at center, rgba(255,214,90,.75) 0%, rgba(255,222,120,.35) 30%, rgba(255,236,180,.12) 55%, rgba(255,255,255,0) 72%);
+    border-radius:50%;
+    pointer-events:none;
+    animation:sunPulse 12s ease-in-out infinite alternate;
+  }
+  @keyframes sunPulse{from{opacity:.85;transform:scale(1)}to{opacity:1;transform:scale(1.06)}}
+  .haze{
+    position:fixed;inset:0;pointer-events:none;
+    background:radial-gradient(ellipse at 50% 100%, rgba(255,244,214,.9) 0%, rgba(255,244,214,0) 60%);
+  }
+  .speck{
+    position:fixed;border-radius:50%;
+    background:radial-gradient(circle at 35% 35%, #FFF6C9, #F7D64A 65%, rgba(247,214,74,0));
+    opacity:.55;pointer-events:none;
+    animation:drift linear infinite;
+  }
+  @keyframes drift{
+    0%{transform:translate3d(0,0,0) scale(1);opacity:0}
+    12%{opacity:.7}
+    100%{transform:translate3d(var(--dx),-110vh,0) scale(.6);opacity:0}
+  }
+  /* ---------- layout ---------- */
+  main{
+    position:relative;z-index:3;
+    max-width:1000px;margin:0 auto;
+    padding:clamp(28px,7vh,90px) clamp(20px,5vw,48px) 0;
+    text-align:center;
+  }
+  .eyebrow{
+    font-size:clamp(.72rem,2.2vw,.86rem);
+    letter-spacing:.34em;text-transform:uppercase;
+    color:var(--ink-soft);opacity:.85;
+    margin-bottom:1.1em;
+    animation:rise 1.2s .15s cubic-bezier(.2,.8,.3,1) both;
+  }
+  h1{
+    font-family:"Great Vibes",cursive;
+    font-weight:400;
+    font-size:clamp(3.1rem,13vw,6.4rem);
+    line-height:1;
+    margin:0 0 .18em;
+    color:#8A5A00;
+    text-shadow:0 2px 0 rgba(255,255,255,.55), 0 18px 40px rgba(190,140,20,.28);
+    animation:rise 1.4s .3s cubic-bezier(.2,.8,.3,1) both;
+  }
+  h1 .small{
+    display:block;font-family:"Cormorant Garamond",serif;
+    font-size:clamp(.9rem,3.4vw,1.25rem);letter-spacing:.42em;
+    text-transform:uppercase;color:var(--ink-soft);margin-bottom:.5em;
+  }
+  .message{
+    font-size:clamp(1.15rem,4.1vw,1.75rem);
+    font-style:italic;font-weight:300;
+    line-height:1.5;
+    max-width:22em;margin:0 auto;
+    color:#5A4126;
+    min-height:3.4em;
+    animation:rise 1.4s .55s cubic-bezier(.2,.8,.3,1) both;
+  }
+  .signature{
+    margin-top:1.15em;
+    font-size:clamp(.8rem,2.4vw,.95rem);
+    letter-spacing:.2em;text-transform:uppercase;
+    color:var(--ink-soft);opacity:0;
+    animation:fade 1.6s 1.5s ease both;
+  }
+  .counter{
+    margin-top:2.6em;
+    font-size:clamp(.85rem,2.6vw,1.02rem);
+    color:var(--ink-soft);letter-spacing:.06em;
+    opacity:0;animation:fade 1.6s 1.2s ease both;
+  }
+  .counter b{color:#B07500;font-weight:600}
+  /* ---------- garden ---------- */
+  .garden{
+    position:relative;z-index:2;
+    width:100%;height:min(52vh,430px);min-height:300px;
+    margin-top:-2.5vh;
+    pointer-events:none;
+  }
+  .ground{
+    position:absolute;left:-10%;right:-10%;bottom:-6%;
+    height:78%;
+    background:linear-gradient(180deg,#CFE0A2 0%,#A9C97A 34%,#7FAE56 72%,#6B9B47 100%);
+    border-radius:50% 50% 0 0 / 26% 26% 0 0;
+    box-shadow:0 -8px 40px rgba(120,150,60,.25) inset;
+  }
+  .ground.back{
+    left:-24%;right:-24%;bottom:6%;height:62%;
+    background:linear-gradient(180deg,#E4EEC4 0%,#C6DB9A 60%,#B6CE86 100%);
+    opacity:.75;border-radius:50% 50% 0 0 / 34% 34% 0 0;
+  }
+  .flower{
+    position:absolute;bottom:0;left:var(--x);
+    width:0;height:0;
+    transform-origin:50% 100%;
+    animation:sway var(--dur,6.5s) ease-in-out var(--delay,0s) infinite alternate;
+  }
+  @keyframes sway{from{transform:rotate(calc(var(--tilt,2deg) * -1))}to{transform:rotate(var(--tilt,2deg))}}
+  .stem{
+    position:absolute;left:0;bottom:0;
+    width:3px;height:var(--sh);
+    margin-left:-1.5px;
+    background:linear-gradient(90deg,#568339,#8CBE58 55%,#5F8F3E);
+    border-radius:2px;
+    transform-origin:50% 100%;
+  }
+  .stem::after{
+    content:"";position:absolute;left:50%;bottom:0;width:5px;height:100%;
+    margin-left:-2.5px;border-radius:2px;
+    background:linear-gradient(90deg,rgba(255,255,255,0),rgba(255,255,255,.28));
+  }
+  .leaf{
+    position:absolute;width:34px;height:16px;
+    background:linear-gradient(120deg,#7FB452,#4E7C32);
+    border-radius:0 100% 0 100%;
+    transform-origin:0% 50%;
+  }
+  .bloom{
+    position:absolute;left:0;bottom:var(--sh);
+    width:0;height:0;
+    transform-origin:0 0;
+    transform:scale(0);
+    animation:bloomIn .95s cubic-bezier(.2,1.2,.35,1) var(--bd,0s) forwards;
+  }
+  @keyframes bloomIn{to{transform:scale(1)}}
+  .petal{
+    position:absolute;left:0;bottom:0;
+    width:var(--pw);height:var(--ph);
+    margin-left:calc(var(--pw) / -2);
+    transform-origin:50% 100%;
+    transform:rotate(var(--a));
+    background:linear-gradient(to top,var(--pc1),var(--pc2));
+    border-radius:52% 52% 42% 42% / 68% 68% 32% 32%;
+    box-shadow:inset 0 -6px 12px rgba(180,110,0,.20);
+  }
+  .core{
+    position:absolute;left:0;bottom:0;
+    width:var(--cs);height:var(--cs);
+    margin:0 0 calc(var(--cs) / -2) calc(var(--cs) / -2);
+    border-radius:50%;
+    background:
+      radial-gradient(circle at 34% 30%, rgba(255,255,255,.35), rgba(255,255,255,0) 45%),
+      radial-gradient(circle at 50% 50%, var(--cc1) 42%, var(--cc2) 100%);
+    box-shadow:0 2px 8px rgba(90,55,10,.35);
+  }
+  /* ---------- petal burst ---------- */
+  .burst{
+    position:fixed;width:14px;height:20px;pointer-events:none;z-index:9;
+    background:linear-gradient(to top,#FFB300,#FFE082);
+    border-radius:52% 52% 42% 42% / 68% 68% 32% 32%;
+    animation:burstFly var(--bf,1.5s) cubic-bezier(.2,.7,.4,1) forwards;
+  }
+  @keyframes burstFly{
+    0%{transform:translate(-50%,-50%) rotate(0) scale(.4);opacity:1}
+    100%{transform:translate(calc(-50% + var(--bx)),calc(-50% + var(--by))) rotate(var(--br)) scale(1);opacity:0}
+  }
+  /* ---------- footer ---------- */
+  footer{
+    position:relative;z-index:3;text-align:center;
+    padding:2.4em 1.2em 3em;
+    font-size:.82rem;letter-spacing:.14em;text-transform:uppercase;
+    color:#8B7448;opacity:0;animation:fade 2s 2s ease both;
+  }
+  footer span{color:#B07500}
+  @keyframes rise{from{opacity:0;transform:translateY(22px)}to{opacity:1;transform:none}}
+  @keyframes fade{to{opacity:.9}}
+  @media (prefers-reduced-motion:reduce){
+    *{animation-duration:.001s!important;animation-iteration-count:1!important;transition:none!important}
+    .bloom{transform:scale(1)!important}
+  }
+  @media (max-width:520px){
+    .garden{height:min(42vh,320px)}
+    .message{max-width:100%}
+  }
+</style>
+</head>
+<body>
+  <div class="sun" aria-hidden="true"></div>
+  <div class="haze" aria-hidden="true"></div>
+
+  <main>
+    <p class="eyebrow" id="dateline">Hoy</p>
+    <h1><span class="small">Flores amarillas para</span>María</h1>
+    <p class="message" id="message">…</p>
+    <p class="signature">— Jeanpool</p>
+    <p class="counter" id="counter"></p>
+
+    <section class="garden" id="garden" aria-hidden="true">
+      <div class="ground back"></div>
+      <div class="ground"></div>
+    </section>
+  </main>
+
+  <footer>Hecho a mano, con cariño <span>·</span> cada día florece distinto</footer>
+
+<script>
+(function(){
+  "use strict";
+
+  /* ============================================================
+     PALABRAS — cambia de mensaje cada vez que se entra
+     ============================================================ */
+  var MENSAJES = [
+    "Hay días que florecen solos. Hoy es uno de ellos, porque pensé en ti.",
+    "Cada flor de esta página es una excusa para decirte que me alegras el día.",
+    "Si pudiera te mandaría el campo entero. Por ahora van estas flores.",
+    "Florecieron para ti. No sé hacer otra cosa cuando pienso en tu nombre.",
+    "No hay primavera que alcance cuando sonríes.",
+    "Te dejo flores amarillas, que es el color de las cosas que empiezan.",
+    "Pensé en un ramo, pero mejor un jardín entero.",
+    "Cada vez que entres aquí habrá una flor esperándote.",
+    "Estas flores no se marchitan, igual que las ganas de verte.",
+    "Algún día te llevaré flores de verdad. Estas son mientras tanto.",
+    "Amarillo es el color de las mañanas buenas. Y tú eres mi mañana buena.",
+    "Sembré esta página pensando en ti y salió un campo entero.",
+    "Que nunca te falten flores, ni motivos para sonreír.",
+    "Te escribo con flores porque las palabras se me quedan cortas.",
+    "Hoy el jardín se ve distinto: es tu nombre el que lo hace florecer.",
+    "Cada girasol busca el sol. Yo, sin darme cuenta, busco tu nombre.",
+    "Van flores amarillas, que es como se dice «pienso en ti» sin decirlo.",
+    "Si estás leyendo esto, alguien se acordó de ti. Y no fui solo yo: también el día.",
+    "Que estas flores te acompañen un día cualquiera, como yo quiero acompañarte.",
+    "No sé cuántas flores hay aquí. Solo sé que son pocas para lo que siento.",
+    "Las flores amarillas se regalan para decir lo que uno no se atreve a decir en voz alta.",
+    "Esto no es una página, es un ramo que no se marchita."
+  ];
+
+  function mensajeDeHoy(){
+    var last = -1;
+    try { last = parseInt(localStorage.getItem("flores_ultimo_mensaje"), 10); } catch(e){}
+    var idx = Math.floor(Math.random() * MENSAJES.length);
+    if (MENSAJES.length > 1 && idx === last) idx = (idx + 1) % MENSAJES.length;
+    try { localStorage.setItem("flores_ultimo_mensaje", String(idx)); } catch(e){}
+    return MENSAJES[idx];
+  }
+
+  /* ============================================================
+     EL DÍA MANDA — tipo y número de flores según la fecha
+     ============================================================ */
+  var now = new Date();
+  var diaSemana = now.getDay();      // 0 = domingo
+  var diaMes = now.getDate();
+
+  var TIPOS = [
+    { nombre:"girasol",   petalos:20, pw:17, ph:46, pc1:"#FFB300", pc2:"#FF8A00", cs:36, cc1:"#6B4517", cc2:"#3A2208" },
+    { nombre:"margarita", petalos:14, pw:13, ph:36, pc1:"#FFE066", pc2:"#FFC107", cs:24, cc1:"#F2A900", cc2:"#C97B00" },
+    { nombre:"calendula", petalos:28, pw:10, ph:24, pc1:"#FFC61A", pc2:"#FF9E00", cs:28, cc1:"#D98A00", cc2:"#8A5200" },
+    { nombre:"rosa",      petalos:22, pw:15, ph:32, pc1:"#FFE9A3", pc2:"#FFC107", cs:20, cc1:"#FFB300", cc2:"#D98A00" },
+    { nombre:"tulipan",   petalos:8,  pw:24, ph:38, pc1:"#FFD54F", pc2:"#FFB300", cs:18, cc1:"#FFA000", cc2:"#C97B00" }
+  ];
+
+  // Cada día de la semana tiene su flor protagonista.
+  var tipo = TIPOS[diaSemana];
+  // Una flor por cada día del mes: el 21 florecen 21, el 3 florecen 3.
+  var cantidad = diaMes;
+  // Y cada día los pétalos son un poco distintos.
+  var petalos = tipo.petalos + (diaMes % 3) * 2;
+
+  var NOMBRES_DIA = ["domingo","lunes","martes","miércoles","jueves","viernes","sábado"];
+  var NOMBRES_MES = ["enero","febrero","marzo","abril","mayo","junio","julio","agosto","septiembre","octubre","noviembre","diciembre"];
+  var NOMBRES_FLOR = {
+    girasol:"girasoles", margarita:"margaritas amarillas", calendula:"caléndulas",
+    rosa:"rosas amarillas", tulipan:"tulipanes amarillos"
+  };
+
+  /* ---------- textos ---------- */
+  var fechaLarga = NOMBRES_DIA[diaSemana].charAt(0).toUpperCase() + NOMBRES_DIA[diaSemana].slice(1)
+    + " " + diaMes + " de " + NOMBRES_MES[now.getMonth()] + " de " + now.getFullYear();
+
+  document.getElementById("dateline").textContent = fechaLarga;
+  document.getElementById("message").textContent = mensajeDeHoy();
+
+  var cnt = document.getElementById("counter");
+  cnt.innerHTML = "Hoy florecieron <b>" + cantidad + " " + NOMBRES_FLOR[tipo.nombre] + "</b> para ti.";
+  if (diaMes === 21 && now.getMonth() === 8) {
+    cnt.innerHTML += "<br>Hoy es el Día de las Flores Amarillas.";
+  }
+
+  /* ============================================================
+     PLANTAR EL JARDÍN
+     ============================================================ */
+  var garden = document.getElementById("garden");
+
+  function crearFlor(i, total){
+    var f = document.createElement("div");
+    f.className = "flower";
+
+    // posición horizontal repartida con un poco de azar controlado
+    var base = (i + 0.5) / total;
+    var jitter = (Math.sin(i * 12.9898) * 43758.5453) % 1;
+    jitter = (jitter - Math.floor(jitter)) - 0.5;
+
+    // Cuantas más flores, más juntas y más pequeñas, para que quepan todas.
+    var margen = total > 24 ? 3.5 : (total > 16 ? 5 : 6);
+    var ancho = 100 - margen * 2;
+    var temblor = total > 24 ? 1.6 : (total > 16 ? 3 : 7);
+    var x = Math.min(100 - margen, Math.max(margen, (base * ancho + margen) + jitter * temblor));
+
+    var minAlto = total > 24 ? 76 : 92;
+    var maxAlto = total > 24 ? 132 : (total > 16 ? 180 : 236);
+    var alto = minAlto + Math.round(Math.abs(Math.sin(i * 3.7)) * (maxAlto - minAlto));
+    var escala = (0.58 + (alto - minAlto) / (maxAlto - minAlto) * 0.40) * (total > 24 ? 0.88 : 1);
+    var dur = (5.4 + Math.abs(Math.cos(i * 2.3)) * 3.4).toFixed(2);
+    var delay = (-Math.abs(Math.sin(i * 1.9)) * 4).toFixed(2);
+    var paso = Math.min(0.11, 2.4 / total);
+    var bd = (0.3 + i * paso).toFixed(2);
+
+    f.style.setProperty("--x", x + "%");
+    f.style.setProperty("--sh", alto + "px");
+    f.style.setProperty("--dur", dur + "s");
+    f.style.setProperty("--delay", delay + "s");
+    f.style.setProperty("--tilt", (1.4 + (i % 3) * 0.6).toFixed(2) + "deg");
+    f.style.zIndex = String(50 - Math.round(alto / 8));
+
+    var tallo = document.createElement("div");
+    tallo.className = "stem";
+    f.appendChild(tallo);
+
+    // hojas
+    for (var h = 0; h < 2; h++){
+      var leaf = document.createElement("div");
+      leaf.className = "leaf";
+      var y = alto * (0.30 + h * 0.26);
+      leaf.style.left = "0px";
+      leaf.style.bottom = y + "px";
+      leaf.style.transform = "rotate(" + (h === 0 ? -28 : 32) + "deg) scale(" + (0.75 + (i % 4) * 0.09).toFixed(2) + ")";
+      f.appendChild(leaf);
+    }
+
+    var bloom = document.createElement("div");
+    bloom.className = "bloom";
+    bloom.style.setProperty("--bd", bd + "s");
+    bloom.style.transform = "scale(0)";
+
+    for (var p = 0; p < petalos; p++){
+      var pet = document.createElement("div");
+      pet.className = "petal";
+      pet.style.setProperty("--a", (p * (360 / petalos)).toFixed(2) + "deg");
+      pet.style.setProperty("--pw", (tipo.pw * escala).toFixed(1) + "px");
+      pet.style.setProperty("--ph", (tipo.ph * escala).toFixed(1) + "px");
+      pet.style.setProperty("--pc1", tipo.pc1);
+      pet.style.setProperty("--pc2", tipo.pc2);
+      bloom.appendChild(pet);
+    }
+
+    var core = document.createElement("div");
+    core.className = "core";
+    core.style.setProperty("--cs", (tipo.cs * escala).toFixed(1) + "px");
+    core.style.setProperty("--cc1", tipo.cc1);
+    core.style.setProperty("--cc2", tipo.cc2);
+    bloom.appendChild(core);
+
+    f.appendChild(bloom);
+    return f;
+  }
+
+  for (var i = 0; i < cantidad; i++){
+    garden.appendChild(crearFlor(i, cantidad));
+  }
+
+  /* ---------- polen flotando ---------- */
+  var FRAG = document.createDocumentFragment();
+  for (var s = 0; s < 26; s++){
+    var sp = document.createElement("div");
+    var size = 3 + Math.random() * 7;
+    sp.className = "speck";
+    sp.style.width = size + "px";
+    sp.style.height = size + "px";
+    sp.style.left = (Math.random() * 100) + "vw";
+    sp.style.bottom = "-6vh";
+    sp.style.setProperty("--dx", ((Math.random() - 0.5) * 26).toFixed(1) + "vw");
+    sp.style.animationDuration = (13 + Math.random() * 16).toFixed(1) + "s";
+    sp.style.animationDelay = (-Math.random() * 20).toFixed(1) + "s";
+    FRAG.appendChild(sp);
+  }
+  document.body.appendChild(FRAG);
+
+  /* ---------- tocar la pantalla: lluvia de pétalos ---------- */
+  var puedeTocar = window.matchMedia("(prefers-reduced-motion: reduce)").matches === false;
+  function petalada(x, y){
+    if (!puedeTocar) return;
+    for (var i = 0; i < 12; i++){
+      var b = document.createElement("div");
+      b.className = "burst";
+      b.style.left = x + "px";
+      b.style.top = y + "px";
+      b.style.setProperty("--bx", ((Math.random() - 0.5) * 320).toFixed(0) + "px");
+      b.style.setProperty("--by", ((Math.random() - 0.15) * 300).toFixed(0) + "px");
+      b.style.setProperty("--br", (Math.random() * 720 - 360).toFixed(0) + "deg");
+      b.style.setProperty("--bf", (1.1 + Math.random() * 0.9).toFixed(2) + "s");
+      document.body.appendChild(b);
+      (function(el){ setTimeout(function(){ el.remove(); }, 2200); })(b);
+    }
+  }
+  window.addEventListener("pointerdown", function(e){ petalada(e.clientX, e.clientY); }, { passive:true });
+})();
+</script>
+</body>
+</html>
